@@ -1,0 +1,334 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url(../../src/fonts/MyFont.woff) format('woff');
+}
+.hero-container{
+    margin: 30px;
+    display: flex;
+    justify-content: space-between;
+    /* background-image: url("hero-background.jpg"); */
+    /* background-position: left; */
+    /* background-repeat: no-repeat; */
+    background: linear-gradient(
+      135deg,
+      #f8f8f8 0%,
+      #ffffff 50%,
+      #f4f5ff 100%
+    );
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.signup-btn{
+    padding: 16px 24px;
+    border-radius: 9px;
+    color: white;
+    background-color: #696CFF;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 120%;
+    letter-spacing: -3%;
+    font-family: "Poppins", sans-serif;
+    border: 0;
+}
+.login-btn{
+    letter-spacing: -2%;
+    line-height: 100%;
+    text-decoration: none;
+    color: black;
+}
+.hero-main{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-left: 100px;
+}
+.title p{
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 120%;
+    letter-spacing: -2%;
+}
+.title-paragraph{
+    font-weight: 400;
+    color: #232323;
+    opacity: 70%;
+    font-size: 18px;
+}
+.hero-btns{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+.hero-image img{
+    border-radius: 20px;
+}
+.sponsor-logos1, .sponsor-logos2{
+    display: flex;
+    justify-content: space-around;
+}
+.sponsor-logos{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+.sponsor-logos-paragraph{
+    text-align: center;
+    color: #232323;
+    font-size: 24px;
+}
+.article{
+    position: relative;
+    color: white;
+    background: linear-gradient(90deg,rgba(105, 108, 255, 1) 0%, rgba(149, 116, 255, 1) 80%);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 30px;
+}
+.article-paragraph{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.article-paragraph .article-main-text{
+    font-size: 40px ;
+}
+.article-paragraph .article-title{
+    font-size: 18px;
+}
+.article-card .article-title{
+    font-size: 25px;
+}
+.article-cards{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 30px;
+}
+.article-card{
+    background: linear-gradient(90deg,rgba(#696CFF) 0%, rgb(#9574FF) 80%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 300px;
+    height: 260px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 32px;
+    font-size: 15px;
+}
+.article-image img{
+    position: absolute;
+    right: 0;
+    top: -320px;
+}
+.blue-word{
+    color: #696CFF;
+}
+.title-main{
+    font-size: 40px;
+    margin-left: 170px;
+}
+.main-card{
+    background-color: #F5F5F9;
+    margin: 10px 140px;
+    border: 2px solid #696CFF;
+    border-radius: 60px;
+    padding: 50px 40px;
+    display: flex;
+}
+.mentors-main-img{
+    position: absolute;
+    right: 250px;
+    top: 1850px;
+}
+.main-left-side{
+    display: flex;
+    flex-direction: column;
+}
+.search-mentor-input{
+    padding: 20px 50px;
+    border-radius: 30px;
+    border: 0;
+    width: 400px;
+}
+.search-logo{
+    position: relative;
+    left: 40px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+}
+.mentor-token-icon{
+    display: flex;
+    align-items: center;
+}
+.list-pages-links li{
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+}
+.list-pages-links li:hover{
+    background-color: #a4a5f8;
+    border-radius: 5px;
+}
+.logout{
+    padding-top: 630px;
+    padding-left: 40px;
+}
+.logout button{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #696CFF;
+    background-color: #ededf5;
+    border: 0;
+    cursor: pointer;
+}
+.list-dashboard, .list-mentor, .list-tokens{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.main-card{
+    background-color: #ededf5;
+}
+.mentors-main-card{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.main-center{
+    display: flex;
+    flex-direction: column;
+}
+.mentors-card-navigation{
+    margin-top: 100px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    padding: 20px;
+    width: 1050px;
+}
+.mentors-title{
+    font-size: 19px;
+    margin: 0;
+}
+.mentors-paragraph{
+    color: #465163;
+    font-size: 15px;
+}
+.mentors-btns{
+    display: flex;
+    gap: 20px;
+}
+.add-new-mentor{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 9px;
+    color: white;
+    background-color: #696CFF;
+    cursor: pointer;
+    font-size: 12px;
+    border: 0;
+}
+.create-new-job{
+    padding: 10px 30px;
+    border-radius: 9px;
+    color: #696CFF;
+    background-color: white;
+    cursor: pointer;
+    font-size: 12px;
+    border: 1px solid #696CFF;
+}
+h3, h4, h5 {
+    margin: 0;
+}
+.mentors-personal-card{
+    padding-left: 30px;
+    border-radius: 15px;
+    background-color: white;
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+.mentors-personal-cards{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+.mentors-personal-info{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 0;
+}
+.view-mentor-btn{
+    border-radius: 5px;
+    color: white;
+    background-color: #696CFF;
+    cursor: pointer;
+    font-size: 10px;
+    border: 0;
+    height: 30px;
+    width: 80px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.view-mentor-flex{
+    display: flex;
+    align-items: center;
+    gap: 150px;
+}
+.view-mentor-flex h5{
+    max-width: 315px;
+}
+.aside{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.cards-aside{
+    display: flex;
+    gap: 100px;
+}
+.aside-card p:nth-of-type(1),.aside-title p:nth-of-type(2) {
+    color: #757D8A;
+    font-size: 13px;
+    margin: 0;
+    padding: 5px;
+}
+.aside-cards{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    font-size: 20px;
+}
+.aside-card{
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+}
+.aside-card p{
+    margin: 0;
+}
+.navigation-btns{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 60px;
+    gap: 5px;
+}
+.navigation-btns button{
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+}

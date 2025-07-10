@@ -1,0 +1,41 @@
+body{
+    margin: 0;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    padding: 20px 30px;
+}
+.links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 38px;
+    border-radius: 30px;
+}
+.links a, .login-btn{
+    letter-spacing: -2%;
+    line-height: 100%;
+    text-decoration: none;
+    color: black;
+}
+.login-signup-btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+.signup-btn{
+    padding: 16px 24px;
+    border-radius: 9px;
+    gap: 16px;
+    color: white;
+    background-color: #696CFF;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 120%;
+    letter-spacing: -3%;
+    border-color: white;
+}

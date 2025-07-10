@@ -1,0 +1,21 @@
+footer{
+    height: 531px;
+    background-color: #232323;
+    padding: 50px 110px;
+    color: white;
+    font-size: 18px;
+}
+footer a{
+    text-decoration: none;
+    color: white;
+}
+.footer-logo, .footer-pages, .footer-contact, .follow-us{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+.footer{
+    display: flex;
+    justify-content: space-around;
+    padding: 30px 0;
+}
