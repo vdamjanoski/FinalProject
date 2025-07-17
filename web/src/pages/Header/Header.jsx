@@ -1,4 +1,5 @@
 import './Header.css'
+import { Link } from 'react-router-dom'
 
 function Header() {
     return <nav className="header">
@@ -6,9 +7,9 @@ function Header() {
             <a href=""><img src="/Group8626.svg" alt="Mentor Token" /></a>
         </div>
         <div className="links">
-            <a href="">Home</a>
-            <a href="">About</a>
-            <a href="">Contact</a>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/contact">Contact</Link>
         </div>
         <div className="login-signup-btns">
             <a href="" className="login-btn">Login</a>
