@@ -1,30 +1,43 @@
-import Header from "./pages/Header/Header"
 import Hero from "./pages/Hero/Hero"
-import Footer from "./pages/Footer/Footer"
 import { createBrowserRouter, Outlet, Router, RouterProvider } from 'react-router-dom'
 import About from "./pages/About/About"
 import Contact from "./pages/Contact/Contact"
-import Home from "./pages/Home/Home"
+import Signup from "./pages/SignUp/SignUp"
+import Login from "./pages/Login/Login"
+import LeftSide from "./pages/Dashboard/LeftSide/LeftSide"
+import Root from "./pages/Root"
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <Root />,
     children: [
+      {
+        index: true,
+        element: <Hero />
+      },
       {
         path: 'about',
         element: <About />
       },
       {
-        path: '/',
-        element: <Hero />
-      },
-      {
         path: 'contact',
         element: <Contact />
-      }
-    ]
-  }
+      },
+    ],
+  },
+      {
+        path: `signup`,
+        element: <Signup />
+      },
+      {
+        path: `login`,
+        element: <Login />
+      },
+      {
+        path: `dashboard`,
+        element: <LeftSide />
+      },
 ])
 
 function App() {

@@ -3,14 +3,9 @@ const bcrypt = require("bcryptjs")
 const validator = require("validator")
 
 const userSchema = new mongoose.Schema({
-    NameSurname: {
+    name: {
         type: String,
-    },
-    phone: {
-        type: Number,
-    },
-    address: {
-        type: String,
+        required: true
     },
     email: {
         type: String,
@@ -23,13 +18,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, `You must enter your password`]
     },
-    StartUpName: {
-        type: String,
-    },
     role: {
         type: String,
-        enum: [`startup`, `mentor`]
-    }
+        required: true,
+        enum: [`startup`, `mentor`],
+    },
+    phone: { Number },
+    skills: [ String ],
+    desc: String,
+    representative: String,
+    address: String,
+    acceptedJobs: [],
+    jobsPosted: [],
+    profilePic: String,
 })
 
 userSchema.pre(`save`, async function (next) {

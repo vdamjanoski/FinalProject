@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import "./Hero.css";
+import { Link } from "react-router-dom";
 function Hero() {
   return (
     <div className="hero">
@@ -23,7 +23,9 @@ function Hero() {
             to drive the success of the ventures they support.
           </p>
           <div className="hero-btns">
-            <button className="signup-btn"> ➔ Get Started</button>
+            <Link to="/signup">
+              <button className="signup-btn"> ➔ Get Started</button>
+            </Link>
             <a href="" className="login-btn">
               Get in Touch
             </a>

@@ -1,5 +1,5 @@
 import './Header.css'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 function Header() {
     return <nav className="header">
@@ -12,8 +12,10 @@ function Header() {
             <Link to="/contact">Contact</Link>
         </div>
         <div className="login-signup-btns">
-            <a href="" className="login-btn">Login</a>
-            <button className="signup-btn"> ➔ Get Started</button>
+            <Link to="/login" className='login-btn'>Login</Link>
+            <Link to="/signup">
+                <button className="signup-btn"> ➔ Get Started</button>
+            </Link>
         </div>
     </nav>
 }

@@ -57,7 +57,7 @@ function Main(){
                 type="text"
                 placeholder="Search Mentor..."
                 className="search-mentor-input"
-              />
+                />
             </form>
             <div className="mentors-main-img">
               <img src="mentors-main-img.svg" alt="" />

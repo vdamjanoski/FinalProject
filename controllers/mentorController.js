@@ -1,14 +1,26 @@
 const User = require("../model/mentor")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
-const promisify = require("util")
 
 exports.signup = async (req,res) => {
     try{
-        await User.create({
-            NameSurname: req.body.NameSurname,
+        const user = await User.create({
+            name: req.body.name,
+            email: req.body.email,
             phone: req.body.phone,
-            email: req.body.email
+            profilePic: req.body.profilePic,
+            address: req.body.address,
+            password: req.body.password,
+            role: req.body.role,
+            skills: req.body.skills,
+            desc: req.body.desc,
+            representative: req.body.representative,
+            jobsPosted: req.body.jobsPosted,
+            acceptedJobs: req.body.acceptedJobs,
+        })
+         res.status(200).json({
+            status: `success`,
+            data: user
         })
     } catch(err){
         res.status(500).json({
@@ -36,7 +48,7 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign({
-            id: user._id, NameSurname: user.NameSurname, email: user.email, role: user.role
+            id: user._id, name: user.name, email: user.email, role: user.role
         }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES});
 
         res.cookie(`jwt`, token, {
