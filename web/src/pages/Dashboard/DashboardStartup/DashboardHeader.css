@@ -1,0 +1,43 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f6f5fa;
+  padding: 20px;
+  width: 100%;
+}
+
+.search-bar {
+  width: 320px;
+  padding: 10px 20px;
+  border-radius: 24px;
+  border: none;
+  font-size: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.company-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.company-name {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #2a2a2a;
+}

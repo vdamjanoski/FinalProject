@@ -4,8 +4,8 @@ import About from "./pages/About/About"
 import Contact from "./pages/Contact/Contact"
 import Signup from "./pages/SignUp/SignUp"
 import Login from "./pages/Login/Login"
-import LeftSide from "./pages/Dashboard/LeftSide/LeftSide"
 import Root from "./pages/Root"
+import DashboardMentor from "./pages/Dashboard/DashboardMentor/DashboardMentor"
 
 const router = createBrowserRouter([
   {
@@ -35,8 +35,8 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
-        path: `dashboard`,
-        element: <LeftSide />
+        path: `mentor/dashboard`,
+        element: <DashboardMentor/>
       },
 ])
 

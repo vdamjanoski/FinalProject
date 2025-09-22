@@ -1,6 +1,5 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import './LeftSide.css'
-import DashboardMain from '../DashboardMain/DashboardMain';
 export default function LeftSide() {
   const navigate = useNavigate;
   const logoutLogo = () => {
@@ -13,7 +12,7 @@ export default function LeftSide() {
           <div className="main-left-side">
             <div className="mentor-token-icon">
               <span className="mentor-token-logo">
-                <img src="Group8626.svg" alt="" />
+                <img src="/Group8626.svg" alt="" />
               </span>
               <span>
                 <img src="backicon.svg" alt="" />
