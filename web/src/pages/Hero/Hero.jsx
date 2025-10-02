@@ -1,5 +1,3 @@
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
 import "./Hero.css";
 import { Link } from "react-router-dom";
 function Hero() {
@@ -14,11 +12,11 @@ function Hero() {
             </p>
           </div>
           <p className="title-paragraph">
-            Welcome to Mentor Token, where we redefine the dynamics of start-up{" "}
+            Welcome to Mentor Token, where we redefine the dynamics of start-up
             <br />
-            sucess. Our innovative platform offers a transformative approach to{" "}
+            sucess. Our innovative platform offers a transformative approach to
             <br />
-            mentorship, ensuring that mentors are not just engaged but motivated{" "}
+            mentorship, ensuring that mentors are not just engaged but motivated
             <br />
             to drive the success of the ventures they support.
           </p>

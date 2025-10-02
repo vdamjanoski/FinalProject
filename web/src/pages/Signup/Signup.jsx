@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
-  const [accountType, setAccountType] = useState("mentor");
+  const [accountType, setAccountType] = useState("");
   const [step, setStep] = useState(1);
   const [error, setError] = useState("")
   const [formData, setFormData] = useState({
@@ -70,14 +70,10 @@ export default function Signup() {
             <h3>CHOOSE ACCOUNT TYPE</h3>
           </div>
           <div className="account-type-toggle">
-            <button
-              className={accountType === "startup" ? "active" : ""}
+            <input type="button" value={formData.role} className={accountType === "startup" ? "active" : ""}
               onClick={() => {
                 setAccountType("startup");
-              }}
-            >
-              Startup
-            </button>
+              }}/> Startup
 
             <button
               className={accountType === "mentor" ? "active" : ""}

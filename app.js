@@ -1,5 +1,6 @@
 const express = require("express")
 const dotenv = require("dotenv")
+const jwt = require("express-jwt")
 dotenv.config({path: `${__dirname}/config.env`})
 const database = require("./database/database")
 const cors = require("cors");

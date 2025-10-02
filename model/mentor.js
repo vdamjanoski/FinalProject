@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
     acceptedJobs: [],
     jobsPosted: [],
     profilePic: String,
+    inviteEmails: String,
 })
 
 userSchema.pre(`save`, async function (next) {

@@ -3,7 +3,7 @@ import './DashboardHeader.css';
 
 function DashboardHeader() {
   return (
-    <div className="header">
+    <div className="dashboard-header">
       <input className="search-bar" type="text" placeholder="Search Mentor..." />
       <div className="profile">
         <img className="avatar" src="image.jpg" alt="Avatar" />

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'
 
 function Login() {
 
@@ -20,7 +21,9 @@ function Login() {
       const data = await res.json();
       if (res.ok && data.token) {
         localStorage.setItem(`token`, data.token);
-        navigate("/dashboard")
+        const decoded = jwtDecode(data.token)
+        console.log(decoded);
+        navigate("mentor/dashboard")
       } else {
         setError(res.data.error || "Грешка при најавување")
       }
