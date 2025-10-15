@@ -1,12 +1,7 @@
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import './LeftSide.css'
+import Logout from './Logout';
 export default function LeftSide() {
-  const navigate = useNavigate;
-  const logoutLogo = () => {
-    localStorage.removeItem('token');
-    navigate("/")
-    console.log("clickedddd")
-  }
 
   return(
           <div className="main-left-side">
@@ -20,31 +15,29 @@ export default function LeftSide() {
             </div>
             <div className="list-pages">
               <ul className="list-pages-links">
-                <li className="list-dashboard">
+                <Link className="list-dashboard" to={{pathname: '/mentor/dashboard'}}>
                   <i>
                     <img src="dashboard.svg" alt="" />
                   </i>
                   Dashboard
-                </li>
-                <li className="list-dashboard">
+                </Link>
+                <Link className="list-dashboard" to={{pathname: '/mentor/my-stats'}}>
                   <i>
                     <img src="mentors.svg" alt="" />
                   </i>
                   My Stats
-                </li>
-                <li className="list-dashboard">
+                </Link>
+                <Link className="list-dashboard" to={{pathname: '/mentor/job-feed'}}>
                   <i>
                     <img src="tokens.svg" alt="" />
                   </i>
                   Job Feed
-                </li>
+                </Link>
               </ul>
             </div>
             <div className="logout">
                 <img src="logout.svg" alt="" />
-              <button className='left-side-button' onClick={logoutLogo()}>
-                Logout
-              </button>
+                <Logout/>
             </div>
           </div>
           )

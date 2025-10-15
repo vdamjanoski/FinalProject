@@ -4,7 +4,7 @@ const jwt = require("express-jwt")
 dotenv.config({path: `${__dirname}/config.env`})
 const database = require("./database/database")
 const cors = require("cors");
-const { signup, login } = require("./controllers/mentorController");
+const auth = require("./controllers/mentorController")
 
 
 const app = express();
@@ -15,8 +15,8 @@ app.use(express.static("public"));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.post(`/api/v1/signup`, signup)
-app.post(`/api/v1/login`, login)
+app.post("/api/v1/signup", auth.signup);
+app.post("/api/v1/login", auth.login);
 
 app.use(
   jwt

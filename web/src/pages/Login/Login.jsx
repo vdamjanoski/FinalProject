@@ -23,7 +23,7 @@ function Login() {
         localStorage.setItem(`token`, data.token);
         const decoded = jwtDecode(data.token)
         console.log(decoded);
-        navigate("mentor/dashboard")
+        navigate("/mentor/dashboard")
       } else {
         setError(res.data.error || "Грешка при најавување")
       }

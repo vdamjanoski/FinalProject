@@ -6,40 +6,53 @@ import { useNavigate } from 'react-router-dom';
 export default function Signup() {
   const [accountType, setAccountType] = useState("");
   const [step, setStep] = useState(1);
-  const [error, setError] = useState("")
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-    phone: "",
-    address: "",
-    role: accountType,
-    representative: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [skills, setSkills] = useState("");
+  const [representative, setRepresentative] = useState("");
+  const [address, setAddress] = useState("");
+  const [inviteEmails, setInviteEmails] = useState("")
    const navigate = useNavigate();
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+ const handleSend = async (e) => {
+  e.preventDefault();
+  setError("");
+
+ const payload = {
+    email,
+    password,
+    role: accountType,
+    name,
+    address,
+    ...(accountType === "mentor"
+      ? { phone, skills: skills.split(",").map(s => s.trim()) }
+      : { representative })
   };
 
-  const handleSend = async (event) => {
-    event.preventDefault();
-    setError("");
-    try{
-      const res = await fetch(`http://localhost:10000/api/v1/signup`, {
-        method: `POST`,
-        headers: { "Content-Type": 'application/json' },
-        body: JSON.stringify( formData  ),
-      })
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData.err || `Server error: ${res.status}`);
+  try {
+    const res = await fetch("http://localhost:10000/api/v1/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (res.status === 201 || data.message === "New user created") {
+      navigate("/login");
+    } else {
+      setError(data.message || "Error creating new user!");
     }
-    navigate("/");
   } catch (err) {
-    console.log(err);
-    setError("Server error: " + err.message);
+    console.error(err);
+    setError("Server error!");
   }
-  }
+};
 
   return (
     <div className="signup">
@@ -70,27 +83,28 @@ export default function Signup() {
             <h3>CHOOSE ACCOUNT TYPE</h3>
           </div>
           <div className="account-type-toggle">
-            <input type="button" value={formData.role} className={accountType === "startup" ? "active" : ""}
+            <button type="button" value="startup" className={accountType === "startup" ? "active" : ""}
               onClick={() => {
                 setAccountType("startup");
-              }}/> Startup
+              }}
+              placeholder="Startup"
+            > Startup
+              </button>
 
-            <button
+            <button type="button" value="mentor"
               className={accountType === "mentor" ? "active" : ""}
               onClick={() => {
                 setAccountType("mentor");
               }}
-            >
-              Mentor
-            </button>
+            > Mentor </button>
           </div>
           <form className="signup-form">
             <input
               type="email"
               name="email"
               placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
 
@@ -98,8 +112,8 @@ export default function Signup() {
               type="password"
               name="password"
               placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <ul className="password-rules">
@@ -109,7 +123,7 @@ export default function Signup() {
               <li>Containing a number or symbol</li>
             </ul>
             <button
-              type="submit"
+              type="button"
               className="continue-btn"
               onClick={() => {
                 setStep(2);
@@ -137,8 +151,8 @@ export default function Signup() {
                 type="text"
                 name="name"
                 placeholder="Name and surname"
-                value={formData.name}
-                onChange={handleChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
               />
 
@@ -146,17 +160,17 @@ export default function Signup() {
                 type="text"
                 name="phone"
                 placeholder="Phone"
-                value={formData.phone}
-                onChange={handleChange}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 required
               />
 
               <input
                 type="text"
-                name="address"
-                placeholder="Adress"
-                value={formData.address}
-                onChange={handleChange}
+                name="skills"
+                placeholder="Skills"
+                value={skills}
+                onChange={(e) => setSkills(e.target.value)}
                 required
               />
               <button className="register-btn" type="submit">Register</button>
@@ -178,17 +192,17 @@ export default function Signup() {
                 type="text"
                 name="name"
                 placeholder="My Startup Name"
-                value={formData.name}
-                onChange={handleChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
               />
 
               <input
                 type="text"
                 name="representative"
-                placeholder="Name and surname"
-                value={formData.representative}
-                onChange={handleChange}
+                placeholder="Legal Representative"
+                value={representative}
+                onChange={(e) => setRepresentative(e.target.value)}
                 required
               />
 
@@ -196,8 +210,8 @@ export default function Signup() {
                 type="text"
                 name="address"
                 placeholder="Registered Business Address"
-                value={formData.address}
-                onChange={handleChange}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
                 required
               />
 
@@ -205,11 +219,11 @@ export default function Signup() {
                 type="email"
                 name="email"
                 placeholder="Enter email address to invite mentor"
-                value={formData.email}
-                onChange={handleChange}
+                value={inviteEmails}
+                onChange={(e) => setInviteEmails(e.target.value)}
                 required
               />
-              <button className="register-btn" type="submit" onClick={() => {console.log(accountType)}}>Register</button>
+              <button className="register-btn" type="submit">Register</button>
               </div>
             </div>
         </form>

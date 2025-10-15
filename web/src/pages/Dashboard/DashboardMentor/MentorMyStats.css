@@ -1,0 +1,17 @@
+.dashboard{
+    display: flex;
+    gap: 60px;
+    width: 100%;
+}
+.dashboard-rightside{
+    display: flex;
+    flex-direction: column;
+}
+.dashboard-center{
+    display: flex;
+    flex-direction: column;
+}
+.mentor-stats-main{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,120 @@
+.mentor-page {
+  background: #f7f8fc;
+  font-family: 'Inter', sans-serif;
+}
+
+.mentor-header {
+  display: flex;
+  align-items: center;
+  padding: 24px 40px 16px 40px;
+}
+
+.mentor-search {
+  flex: 1;
+  border: 1px solid #e4e4e4;
+  border-radius: 24px;
+  padding: 10px 18px;
+  margin-right: 2rem;
+  font-size: 1rem;
+}
+
+.mentor-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #7b7b7b;
+  font-size: 1rem;
+}
+
+.mentor-logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.mentor-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 32px 40px;
+}
+
+.mentor-card {
+  background: #fff;
+  padding: 24px 16px;
+  border-radius: 16px;
+  width: 260px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(60,60,60,0.03);
+}
+
+.mentor-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mentor-name {
+  margin-top: 14px;
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+.mentor-role {
+  color: #6b7280;
+  margin-bottom: 14px;
+  font-size: .96rem;
+}
+
+.mentor-contact {
+  font-size: 0.94rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+.mentor-about {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px 24px 16px 24px;
+  flex: 1;
+  min-width: 340px;
+  box-shadow: 0 2px 8px rgba(60,60,60,0.03);
+  height: 250px;
+}
+
+.mentor-about-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.mentor-offer-btn {
+  background: #5762ff;
+  color: #fff;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 18px;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.mentor-offer-btn:hover {
+  background: #4251c4;
+}
+
+.mentor-skills {
+  margin-bottom: 8px;
+  font-size: 1.02rem;
+}
+
+.mentor-description {
+  color: #666;
+  font-size: 0.99rem;
+}

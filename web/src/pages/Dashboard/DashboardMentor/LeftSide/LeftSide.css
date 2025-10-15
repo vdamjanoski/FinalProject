@@ -28,11 +28,12 @@
 .logout .left-side-button{
     background: none;
     color: #a4a5f8;
+    cursor: pointer;
 }
 .logout{
     display: flex;
     padding-left: 40px;
-    padding-top: 565px;
+    padding-top: 650px;
 }
 .list-dashboard{
     display: flex;
