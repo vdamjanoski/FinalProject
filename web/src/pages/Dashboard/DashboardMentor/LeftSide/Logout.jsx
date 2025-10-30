@@ -5,11 +5,14 @@ function Logout() {
   const handleLogout = () => {
     navigate('/login');
   };
-
   return (
-    <button className='left-side-button' onClick={handleLogout}>
-                Logout
-              </button>
+    <span>
+    <button onClick={handleLogout} style={{background: "none", color:"#a4a5f8", cursor: "pointer", border: "none" }}>
+      <img src="/public/logout.png" alt="" />
+        Logout
+    </button>
+    </span>
+    
   );
 }
 

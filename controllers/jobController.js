@@ -3,7 +3,8 @@ const Job = require('../model/jobSchema')
 exports.createJob = async (req, res) => {
     try {
         const newJob = await Job.create({...req.body, companyId: req.auth.id});
-        console.log(newJob)
+        console.log("Your new job:", newJob)
+        console.log("Job body:", {companyId: req.auth.id });
         res.status(201).json({
             status: "Success",
             data: {
@@ -81,5 +82,22 @@ exports.deleteJob = async (req, res) => {
             status: "fail",
             err: err.message
         });
+    }
+}
+
+exports.getAllStartupJobs = async (req,res) => {
+    try{
+        const startupId = req.auth.id;
+        const allJobs = await Job.find({ companyId: startupId });
+
+        res.status(200).json({
+            status: "success",
+            data: { allJobs }
+        })
+    } catch (err) {
+        res.status(500).json({
+            status: "fail",
+            message: err.message
+        })
     }
 }

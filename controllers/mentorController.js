@@ -97,6 +97,12 @@ exports.login = async (req, res) => {
         res.status(200).json({
             status: `success`,
             token,
+            user: {
+              role: user.role,
+              name: user.name,
+              email: user.email,
+              id: user._id,
+            }
         })
         
     } catch (err) {
@@ -105,4 +111,64 @@ exports.login = async (req, res) => {
             err: err.message
         })
     }
+}
+
+exports.getUsers = async (req,res) => {
+  try{
+    const users = await User.find();
+    res.json(users)
+  }catch(err){
+    res.status(500).json({
+      message: err.message
+    })
+  }
+}
+
+exports.getUser = async (req,res) => {
+  try{
+    const user = await User.findById(req.params.id)
+    const populateUser = user.role === "startup" ? await user.populate("jobsPosted")
+    : await user.populate("acceptedJobs")
+    res.status(200).json({
+      status: "success",
+      data: {populateUser}
+    })
+  }catch(err){
+    res.status(404).json({
+      message: err.message,
+    })
+  }
+}
+
+exports.deleteUser = async (req,res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id)
+    res.status(200).json({
+      status: "success",
+      data: {user}
+    })
+  } catch (err) {
+    res.status(500).json({
+      status: "fail",
+      message: err.message
+    })
+  }
+}
+
+exports.update = async (req,res) => {
+  try{
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    })
+    res.status(200).json({
+      status: "success",
+      data: {user}
+    })
+  } catch(err){
+    res.status(404).json({
+      status: "fail",
+      message: err.message
+    })
+  }
 }

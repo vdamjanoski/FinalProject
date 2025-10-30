@@ -1,5 +1,8 @@
 import React from 'react';
 import './StartupJobs.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode'
 
 const jobs = [
   { id: 1, logo: '🔷', company: 'TechWave Innovations', offer: 'New Job Offer' },
@@ -13,43 +16,77 @@ const jobs = [
 ];
 
 export default function StartupJobs() {
+  const [offers, setOffers] = useState([]);
+  const [user, setUser] = useState({});
+
+  const token = localStorage.getItem("token")
+  useEffect(() => {
+    if (!token) return;
+
+    try{
+      const decoded = jwtDecode(token);
+      console.log(decoded)
+      setUser({
+        id: decoded.id,
+        name: decoded.name,
+        role: decoded.role,
+        desc: decoded.desc,
+        email: decoded.email,
+        phone: decoded.phone,
+        skills: decoded.skills,
+      })
+    } catch (err) {
+      console.log("fail");
+    }
+  }, [token]);
+
+  useEffect(() => {
+     if (!user || !user.id) return;
+
+    const fetchOffers = async () => {
+      try{
+        const res = await fetch('http://localhost:10000/api/v1/jobs',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        const data = await res.json();
+        console.log("Api response:", data);
+        
+        setOffers(data.data?.allJobs || []);
+        console.log(data.data?.allJobs);
+        
+      }catch(err){
+        console.log(err.message);
+      }
+    }
+    fetchOffers();
+  }, [user, token]
+)
+  
   return (
-    <div className="jobs-container">
+    <div>
       <div className="jobs-header">
-        <h2>All startup Jobs</h2>
-        <div className="jobs-controls">
-          <div className="jobs-sort">
-            <label>Sort by:</label>
-            <select>
-              <option>Popular</option>
-              <option>Newest</option>
-            </select>
-          </div>
-          <div className="jobs-category">
-            <label>Category:</label>
-            <select>
-              <option>All Category</option>
-              <option>Tech</option>
-              <option>Business</option>
-            </select>
-          </div>
-          <button className="jobs-filters">Filters</button>
-          <button className="jobs-gridicon">⛶</button>
-        </div>
+        <h2>Your Startup Jobs</h2>
       </div>
       <div className="jobs-grid">
-        {jobs.map(job => (
-          <div className="job-card" key={job.id}>
-            <div className="job-logo">{job.logo}</div>
-            <h3 className="job-company">{job.company}</h3>
-            <div className="job-offer">{job.offer}</div>
+        {offers.map((offer) => {
+          return(
+          <div className="job-card-feed" key={offer._id}>
+            <div className="job-logo">{offer.title}
+            <h3 className="job-company">{offer.companyId.name}</h3>
+            </div>
+            <div className="job-offer">{offer.status}</div>
             <div className="job-desc">
-              Lorem Ipsum Dolor Sit Amet Consectetur Facilisis Nunc Ut Tellus Augue
-              A aliquam Arcu. Libero Imperdiet Odio Sed Morbi Quis Felis Prian.
+              {offer.description}
             </div>
             <button className="view-more">View More</button>
           </div>
-        ))}
+          )
+        }
+        )}
       </div>
     </div>
   );

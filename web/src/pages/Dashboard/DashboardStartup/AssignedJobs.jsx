@@ -1,86 +1,61 @@
 import React, { useState } from "react";
 import "./AssignedJobs.css";
 
-const jobs = [
-  { name: "Revenue per rate", status: "done" },
-  { name: "ARPU (Average revenue per use)", status: "rejected" },
-  { name: "CAC (Custom Acquisition Cost)", status: "inprogress" },
-  { name: "Churn Rate", status: "done" },
-  { name: "Burn Rate", status: "inprogress" },
-  { name: "Operation Efficiency", status: "done" },
-  { name: "Burn Rate", status: "inprogress" },
-  { name: "Operation Efficiency", status: "done" },
-  { name: "Burn Rate", status: "inprogress" },
-  { name: "Operation Efficiency", status: "done" },
+const jobsData = [
+  { id: 1, title: "Revenue per rate", status: "DONE" },
+  { id: 2, title: "ARPU (Average revenue per use)", status: "CANCELED" },
+  { id: 3, title: "CAC (Custom Acquisition Cost)", status: "IN PROGRESS" },
+  { id: 4, title: "Churn Rate", status: "DONE" },
+  { id: 5, title: "Burn Rate", status: "IN PROGRESS" },
+  { id: 6, title: "Operation Efficiency", status: "DONE" },
+  { id: 7, title: "Burn Rate", status: "IN PROGRESS" },
+  { id: 8, title: "Operation Efficiency", status: "DONE" },
 ];
-
-const tabs = [
-  { label: "All", value: "all" },
-  { label: "Done", value: "done" },
-  { label: "Rejected", value: "rejected" },
-  { label: "In Progress", value: "inprogress" },
-];
-
-const getStatusClass = (status) => {
-  switch (status) {
-    case "done":
-      return "status-done";
-    case "rejected":
-      return "status-rejected";
-    case "inprogress":
-      return "status-inprogress";
-    default:
-      return "";
-  }
-};
-
-const getStatusLabel = (status) => {
-  switch (status) {
-    case "done":
-      return "DONE";
-    case "rejected":
-      return "REJECTED";
-    case "inprogress":
-      return "IN PROGRESS";
-    default:
-      return "";
-  }
-};
-
-const filterJobs = (jobs, filter) => {
-  if (filter === "all") return jobs;
-  return jobs.filter(job => job.status === filter);
-};
 
 function AssignedJobs() {
-  const [activeTab, setActiveTab] = useState("all");
-  const filteredJobs = filterJobs(jobs, activeTab);
+  const [filter, setFilter] = useState("ALL");
+    const filteredJobs =
+      filter === "ALL"
+        ? jobsData
+        : jobsData.filter((job) => {
+            if (filter === "DONE") return job.status === "DONE";
+            if (filter === "CANCELED") return job.status === "CANCELED";
+            if (filter === "IN PROGRESS") return job.status === "IN PROGRESS";
+            return true;
+          });
 
   return (
     <div className="assigned-jobs">
-      <h2>Assigned Jobs</h2>
-      <div className="tabs">
-        {tabs.map(tab => (
-          <span
-            key={tab.value}
-            className={`tab ${activeTab === tab.value ? "tab-active" : ""}`}
-            onClick={() => setActiveTab(tab.value)}
-          >
-            {tab.label}
-          </span>
-        ))}
-      </div>
-      <div className="job-list">
-        {filteredJobs.map((job, idx) => (
-          <div className="job-row" key={idx}>
-            <span className="job-title">{job.name}</span>
-            <span className={`job-status ${getStatusClass(job.status)}`}>
-              {getStatusLabel(job.status)}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
+                  <h2>Assigned Jobs</h2>
+                  <div className="tabs">
+                    {["ALL", "DONE", "CANCELED", "IN PROGRESS"].map((tab) => (
+                      <button
+                        key={tab}
+                        className={`tab-button ${
+                          filter === tab ? "active" : ""
+                        }`}
+                        onClick={() => setFilter(tab)}
+                      >
+                        {tab.charAt(0) + tab.slice(1).toLowerCase()}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="job-list">
+                    {filteredJobs.map((job) => (
+                      <div key={job.id} className="job-card">
+                        <span className="job-title">{job.title}</span>
+                        <span
+                          className={`job-status status-${job.status
+                            .toLowerCase()
+                            .replace(" ", "-")}`}
+                        >
+                          {job.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
   );
 }
 

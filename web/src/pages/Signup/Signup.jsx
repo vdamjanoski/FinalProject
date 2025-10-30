@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
-  const [accountType, setAccountType] = useState("");
+  const [accountType, setAccountType] = useState("startup");
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -123,7 +123,7 @@ export default function Signup() {
               <li>Containing a number or symbol</li>
             </ul>
             <button
-              type="button"
+              type="submit"
               className="continue-btn"
               onClick={() => {
                 setStep(2);

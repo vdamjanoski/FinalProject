@@ -9,6 +9,11 @@ import LeftSide from "./pages/Dashboard/DashboardMentor/LeftSide/LeftSide"
 import MentorJobFeed from "./pages/Dashboard/DashboardMentor/MentorJobFeed"
 import MentorMyStats from "./pages/Dashboard/DashboardMentor/MentorMyStats"
 import Signup from "./pages/Signup/Signup"
+import MyStatsStartup from "./pages/Dashboard/DashboardStartup/MyStats"
+import MyStats from "./pages/Dashboard/DashboardStartup/MyStats"
+import DashboardStartup from "./pages/Dashboard/DashboardStartup/DashboardStartup"
+import StartupJobsDashboard from "./pages/Dashboard/DashboardStartup/StartupJobsDashboard"
+import Main from "./pages/Main/Main"
 
 const router = createBrowserRouter([
   {
@@ -47,6 +52,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'startup',
+        children: [
+          { path: 'mentors', element: <Main/>},
+          { path: 'dashboard', element: <DashboardStartup/>},
+          { path: 'jobs', element: <StartupJobsDashboard/>}
+        ]
       }
 ]);
 

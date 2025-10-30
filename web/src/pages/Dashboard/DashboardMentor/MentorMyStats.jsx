@@ -1,5 +1,4 @@
 import DashboardHeader from "../DashboardStartup/DashboardHeader";
-import StartupJobs from "../DashboardStartup/StartupJobs";
 import LeftSide from "./LeftSide/LeftSide";
 import './DashboardMentor.css'
 import MentorStatsDown from "./MentorStatsDown";

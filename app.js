@@ -5,6 +5,8 @@ dotenv.config({path: `${__dirname}/config.env`})
 const database = require("./database/database")
 const cors = require("cors");
 const auth = require("./controllers/mentorController")
+const job = require("./controllers/jobController")
+const application = require("./controllers/appController")
 
 
 const app = express();
@@ -40,6 +42,27 @@ app.use(
       path: ["/api/v1/signup", "/api/v1/login"],
     })
 );
+
+app.get("/api/v1/users", auth.getUsers);
+app.get("api/v1/user/:id", auth.getUser);
+app.delete("/api/v1/user/:id", auth.deleteUser);
+app.patch("/api/v1/updateUser/:id", auth.update)
+
+app.post("/api/v1/job", job.createJob);
+app.get("/api/v1/jobs", job.getAllJobs);
+app.get("/api/v1/jobs/:id", job.getOneJob);
+app.delete("/api/v1/job/:id", job.deleteJob);
+app.patch("/api/v1/job/:id", job.updateJob);
+app.get("/api/v1/jobs-startup", job.getAllStartupJobs)
+
+app.post("/api/v1/application", application.create);
+app.get("/api/v1/applications", application.getAllApps);
+app.get("/api/v1/application", application.getApp);
+app.get("/api/v1/application/mentor/:id", application.applicationByMentor);
+app.delete("/api/v1/application/:id", application.deleteApp);
+app.patch("/api/v1/application/:id", application.updateApp);
+app.get("/api/v1/offers/mentor", application.getMentorOffersJob);
+app.get("/api/v1/applications/startup", application.getApplicationsForStartup);
 
 app.listen(process.env.PORT, (err) => {
     if (err){

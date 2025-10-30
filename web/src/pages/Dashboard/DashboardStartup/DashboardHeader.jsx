@@ -1,18 +1,24 @@
 import React from 'react';
-import './DashboardHeader.css';
 
 function DashboardHeader() {
   return (
-    <div className="dashboard-header">
-      <input className="search-bar" type="text" placeholder="Search Mentor..." />
-      <div className="profile">
-        <img className="avatar" src="image.jpg" alt="Avatar" />
-        <div className="company-info">
-          <span className="company-name">TechWave</span>
-          <span className="company-title">Innovations</span>
-        </div>
-      </div>
-    </div>
+    <div className="header-container">
+           <div className="search-wrapper">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search Mentor..."
+              />
+            </div>
+            <div className="company-profile">
+              <img
+                src="/public/kierra.png"
+                alt="Logo"
+                className="company-logo"
+              />
+              <span className="company-text">Kirra Press</span>
+            </div>
+          </div>
   );
 }
 

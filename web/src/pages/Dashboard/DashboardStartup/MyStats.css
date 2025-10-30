@@ -1,0 +1,132 @@
+.sidebar-mentor {
+  width: 250px;
+  background-color: #ffffff79;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #f1f1f1;
+  padding-left: 20px;
+  margin-top: 20px;
+}
+.sidebar-header-mentor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.collapse-btn-mentor {
+  background-color: #eef0ff;
+  border: none;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  color: #6a63ff;
+  display: flex;
+  top: 15px;
+  right: 15px;
+  position: relative;
+
+}
+.sidebar-menu-mentor  {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 40px;
+  margin-bottom: 520px;
+}
+/*           -mentor           */
+.menu-item-mentor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #5f6b7d;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  text-decoration: none;
+}
+
+.menu-item-mentor:hover {
+background-color: #f2f4ff;
+  color: #696CFF;
+  font-weight: 500;
+  border-right: 4px solid #6a63ff;
+}
+
+.menu-icon-mentor {
+  font-size: 18px;
+}
+.sidebar-footer-mentor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6a63ff;
+  cursor: pointer;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.sidebar-footer-mentor:hover {
+  opacity: 0.8;
+}
+
+.Main-Container{
+  background-color: #f6f6fa;
+}
+.Mentor-Container{
+  background-color: #f6f6fa;;
+}
+
+.pending-offers-section{
+  padding-top: 30px;
+}
+
+.pending-offers-title {
+  font-size: 21px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 16px;
+}
+
+.pending-offers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pending-offer-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(66,78,146,0.04);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 18px;
+  width: 500px;
+}
+
+.pending-offer-title {
+  color: #434a65;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.pending-offer-btn {
+  background: transparent;
+  border: 2px solid #e3419c;
+  color: #e3419c;
+  border-radius: 6px;
+  padding: 6px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.pending-offer-btn:hover {
+  background: #fce9f6;
+  color: #bc297e;
+}
+.jobs-dashboard-grid{
+  display: flex;
+  gap: 70px;
+}

@@ -6,9 +6,9 @@ export default function MentorStatsDown() {
     <div className="mentor-down-container">
       <div className="mentor-down-left">
         <div className="mentor-down-title">Performance Over Time</div>
-        <div className="statistics-card">
-          <div className="statistics-title">STATISTICS</div>
-          <div className="statistics-subtitle">
+        <div className="statistics-card-mentor">
+          <div className="statistics-title-mentor">STATISTICS</div>
+          <div className="statistics-subtitle-mentor">
             Overall target accomplishment over the year
           </div>
           <svg width="540" height="300" viewBox="0 0 260 130">

@@ -1,7 +1,6 @@
 .dashboard{
-    display: flex;
-    gap: 60px;
     width: 100%;
+    display: flex;
 }
 .dashboard-rightside{
     display: flex;
@@ -10,7 +9,10 @@
 .dashboard-center{
     display: flex;
     flex-direction: column;
+    width: 100%;
+    background-color: #f2f2f8;
 }
 .dashboard-main{
     display: flex;
+    gap: 100px;
 }

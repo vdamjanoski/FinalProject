@@ -52,13 +52,6 @@
   box-shadow: 0 2px 8px rgba(60,60,60,0.03);
 }
 
-.mentor-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .mentor-name {
   margin-top: 14px;
   font-weight: 600;

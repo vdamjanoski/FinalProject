@@ -1,11 +1,3 @@
-.main-card{
-    background-color: #F5F5F9;
-    margin: 10px 140px;
-    border: 2px solid #696CFF;
-    border-radius: 60px;
-    padding: 50px 40px;
-    display: flex;
-}
 .mentors-main-img{
     position: absolute;
     right: 250px;
@@ -27,10 +19,6 @@
     top: 5px;
     width: 20px;
     height: 20px;
-}
-.mentor-token-icon{
-    display: flex;
-    align-items: center;
 }
 .list-pages-links li{
     list-style: none;
@@ -60,19 +48,21 @@
     align-items: center;
 }
 .main-card{
-    background-color: #ededf5;
+    display: flex;
+    background: #f2f2f8;
 }
 .mentors-main-card{
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin: 30px;
 }
 .main-center{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 .mentors-card-navigation{
-    margin-top: 100px;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -167,7 +157,7 @@ h3, h4, h5 {
 }
 .cards-aside{
     display: flex;
-    gap: 100px;
+    gap: 150px;
 }
 .aside-card p:nth-of-type(1),.aside-title p:nth-of-type(2) {
     color: #757D8A;

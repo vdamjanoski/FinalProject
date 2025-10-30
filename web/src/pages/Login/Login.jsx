@@ -12,20 +12,37 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    console.log("Sending:", {email, password});
+    
     try{
       const res = await fetch(`http://localhost:10000/api/v1/login`, {
         method: `POST`,
         headers: { "Content-Type": 'application/json' },
         body: JSON.stringify({email, password}),
       })
-      const data = await res.json();
+
+      const text = await res.text();
+      console.log("Backend says:", text);
+
+      let data;
+      try{
+        data = JSON.parse(text);
+      } catch{
+        data = {error: text}
+      }
       if (res.ok && data.token) {
         localStorage.setItem(`token`, data.token);
         const decoded = jwtDecode(data.token)
         console.log(decoded);
-        navigate("/mentor/dashboard")
+        if (decoded.role === "mentor") {
+          navigate("/mentor/dashboard")
+        } else if (decoded.role === "startup"){
+          navigate("/startup/dashboard")
+        } else {
+          console.log(data.error);
+        }
       } else {
-        setError(res.data.error || "Грешка при најавување")
+        setError(data.error || "Грешка при најавување")
       }
     }catch(err){
       console.log(err);
@@ -82,7 +99,7 @@ function Login() {
               type="submit"
               className="continue-btn"
             >
-              Continue
+              Log In
             </button>
           </form>
           <p className="login-link">

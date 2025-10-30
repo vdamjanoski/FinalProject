@@ -8,7 +8,7 @@ function MentorProfileCard() {
         <div className="mentor-card">
           <img
             className="mentor-avatar"
-            src='mentors1.svg'
+            src='/public/kierra.png'
             alt="Kierra Press"
           />
           <div className="mentor-info">
