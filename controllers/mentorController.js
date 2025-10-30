@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 
 exports.signup = async (req, res) => {
+  console.log("Request body", req.body);
+  
   try {
     const {
       name,
@@ -49,6 +51,8 @@ exports.signup = async (req, res) => {
       representative,
       address,  
     });
+    console.log("saved user", newUser);
+    
 
     res.status(201).json({
       status: "success",
@@ -57,6 +61,10 @@ exports.signup = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         role: newUser.role,
+        phone: newUser.phone,
+        desc: newUser.desc,
+        skills: newUser.skills,
+        address: newUser.address
       },
     });
   } catch (err) {
@@ -86,7 +94,7 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign({
-            id: user._id, name: user.name, email: user.email, role: user.role
+            id: user._id, name: user.name, email: user.email, role: user.role, phone: user.phone, skills: user.skills,
         }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES});
 
         res.cookie(`jwt`, token, {
@@ -124,21 +132,21 @@ exports.getUsers = async (req,res) => {
   }
 }
 
-exports.getUser = async (req,res) => {
-  try{
+exports.getUser = async (req, res) => {
+  try {
     const user = await User.findById(req.params.id)
-    const populateUser = user.role === "startup" ? await user.populate("jobsPosted")
-    : await user.populate("acceptedJobs")
+      .select("name email role phone skills desc address acceptedJobs jobsPosted"); // include all fields
+    if (!user) {
+      return res.status(404).json({ status: "fail", message: "User not found" });
+    }
     res.status(200).json({
       status: "success",
-      data: {populateUser}
-    })
-  }catch(err){
-    res.status(404).json({
-      message: err.message,
-    })
+      data: { user },
+    });
+  } catch (err) {
+    res.status(500).json({ status: "error", message: err.message });
   }
-}
+};
 
 exports.deleteUser = async (req,res) => {
   try {

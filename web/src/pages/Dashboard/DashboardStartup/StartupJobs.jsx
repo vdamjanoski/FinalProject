@@ -4,20 +4,11 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode'
 
-const jobs = [
-  { id: 1, logo: '🔷', company: 'TechWave Innovations', offer: 'New Job Offer' },
-  { id: 2, logo: '🟣', company: 'TechWave Innovations', offer: 'New Job Offer' },
-  { id: 3, logo: '🔷', company: 'TechWave Innovations', offer: 'New Job Offer' },
-  { id: 4, logo: '🔵', company: 'TechWave Innovations', offer: 'New Job Offer' },
-  { id: 5, logo: '🟥', company: 'TechWave Innovations', offer: 'New Job Offer' },
-  { id: 6, logo: '🔵', company: 'TechWave Innovations', offer: 'New Job Offer' },
-  { id: 7, logo: '🟡', company: 'TechWave Innovations', offer: 'New Job Offer' },
-  { id: 8, logo: '🟤', company: 'TechWave Innovations', offer: 'New Job Offer' }
-];
-
 export default function StartupJobs() {
   const [offers, setOffers] = useState([]);
   const [user, setUser] = useState({});
+  const [showJobModal, setShowJobModal] = useState(false)
+  const [selectedJob, setSelectedJob] = useState("")
 
   const token = localStorage.getItem("token")
   useEffect(() => {
@@ -82,12 +73,29 @@ export default function StartupJobs() {
             <div className="job-desc">
               {offer.description}
             </div>
-            <button className="view-more">View More</button>
+            <button className="view-more" onClick={() => {
+                setSelectedJob(offer);
+                setShowJobModal(true);
+              }}>View More</button>
           </div>
           )
         }
         )}
       </div>
+      {showJobModal && selectedJob && (
+  <div className="modalBackdrop">
+    <div className="modal">
+      <span
+        className="closeX"
+        onClick={() => setShowJobModal(false)}
+      >
+        &times;
+      </span>
+      <h3>{selectedJob.title}</h3>
+      <p className="jobDescFull">{selectedJob.description}</p>
+    </div>
+  </div>
+)}
     </div>
   );
 }

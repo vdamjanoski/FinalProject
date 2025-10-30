@@ -21,16 +21,16 @@ export default function Signup() {
   e.preventDefault();
   setError("");
 
- const payload = {
-    email,
-    password,
-    role: accountType,
-    name,
-    address,
-    ...(accountType === "mentor"
-      ? { phone, skills: skills.split(",").map(s => s.trim()) }
-      : { representative })
-  };
+const payload = {
+  email,
+  password,
+  role: accountType,
+  name,
+  address,
+  ...(accountType === "mentor"
+    ? { phone, skills: skills.split(",").map(s => s.trim()) }
+    : { representative }),
+};
 
   try {
     const res = await fetch("http://localhost:10000/api/v1/signup", {

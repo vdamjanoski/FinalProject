@@ -23,7 +23,7 @@ const jobSchema = new mongoose.Schema({
     enum: ["Direct", "Open"],
     default: "Open",
   },
-});
+},{ timestamps: true });
 
 const Job = mongoose.model("Job", jobSchema);
 

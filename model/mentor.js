@@ -2,37 +2,60 @@ const mongoose = require("mongoose")
 const bcrypt = require("bcryptjs")
 const validator = require("validator")
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        require: [true, `You must enter your email`],
-        lowercase: true,
-        unique: true,
-        validate: [validator.isEmail, `Your email is not valid`]
+      type: String,
+      required: [true, `You must enter your email`],
+      lowercase: true,
+      unique: true,
+      validate: [validator.isEmail, `Your email is not valid`],
     },
     password: {
-        type: String,
-        required: [true, `You must enter your password`]
+      type: String,
+      required: [true, `You must enter your password`],
     },
     role: {
-        type: String,
-        required: true,
-        enum: [`startup`, `mentor`],
+      type: String,
+      required: true,
+      enum: [`startup`, `mentor`],
     },
-    phone: { Number },
-    skills: [ String ],
-    desc: String,
-    representative: String,
-    address: String,
-    acceptedJobs: [],
-    jobsPosted: [],
+    phone: {
+      type: String,
+    },
+    skills: {
+      type: [String],
+    },
+    desc: {
+      type: String,
+    },
+    representative: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    acceptedJobs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Job",
+      },
+    ],
+    jobsPosted: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Job",
+      },
+    ],
     profilePic: String,
     inviteEmails: String,
-})
+  },
+  { timestamps: true }
+);
 
 userSchema.pre(`save`, async function (next) {
     if (!this.isModified(`password`)) return next();

@@ -3,48 +3,21 @@ import "./StartupJobs.css";
 import LeftSideStartup from "../DashboardMentor/LeftSide/LeftSideStartup";
 import DashboardHeader from "./DashboardHeader";
 import { jwtDecode } from "jwt-decode";
-
-const jobs = [
-  {
-    id: 1,
-    logo: "🔷",
-    company: "TechWave Innovations",
-    offer: "New Job Offer",
-  },
-  {
-    id: 2,
-    logo: "🟣",
-    company: "TechWave Innovations",
-    offer: "New Job Offer",
-  },
-  {
-    id: 3,
-    logo: "🔷",
-    company: "TechWave Innovations",
-    offer: "New Job Offer",
-  },
-  {
-    id: 4,
-    logo: "🔵",
-    company: "TechWave Innovations",
-    offer: "New Job Offer",
-  },
-];
-
-/api/v1/jobs-startup
+import axios from "axios";
+import "./StartupJobsDashboard.css"
 
 export default function StartupJobsDashboard() {
   const [user, setUser] = useState(null);
   const [data, setData] = useState([])
   const [showModal, setShowModal] = useState(false)
-  const [showJobModal, setShowJobMolda] = useState(false)
+  const [showJobModal, setShowJobModal] = useState(false)
   const [jobTitle, setJobTitle] = useState("")
   const [jobDescription, setJobDescription] = useState("")
   const [selectedJob, setSelectedJob] = useState(null)
 
   const token = localStorage.getItem("token")
 
-  const useEffect(() => {
+   useEffect(() => {
     if(!token) return;
     try{
       const decoded = jwtDecode(token)
@@ -67,7 +40,8 @@ export default function StartupJobsDashboard() {
             headers: { Authorization: `Bearer ${token}`},
           }
         );
-        setData(res.data.allJobs || []);
+        setData(res.data.data.allJobs || []);
+        console.log(res.data.data.allJobs);
       } catch(err){
         console.log("Fetch error: ", err.message);
       }
@@ -82,10 +56,25 @@ export default function StartupJobsDashboard() {
     }
     try{
       const res = await axios.post(
-        "http://localhost:10000/api/v1/job"
-      )
+        "http://localhost:10000/api/v1/job",
+        {title: jobTitle, description: jobDescription},
+        {headers: { Authorization: `Bearer ${token}`}}
+      );
+
+      if (res.status === 201) {
+        console.log("Job created", res);
+        setData((prev) => [...prev, res.data.data.newJob]);
+        setShowModal(false)
+        setJobTitle("")
+        setJobDescription("")
+      } else {
+        console.log("Failed to create job");
+      }
+    }  catch (err) {
+      console.log(err.message);
     }
-  }
+  };
+
   return (
     <div className="jobs-container">
       <LeftSideStartup />
@@ -109,25 +98,74 @@ export default function StartupJobsDashboard() {
         </div>
         <div className="jobs-header">
           <h2>Your Startup Jobs</h2>
-          <button className="startup-jobs-btn">Create New Job</button>
+          <button className="startup-jobs-btn" onClick={() => setShowModal(true)}>Create New Job</button>
         </div>
         <div className="jobs-grid">
-          {jobs.map((job) => (
+          {data.map((job) => (
             <div className="job-card-feed" key={job.id}>
               <div className="job-logo">
-                {job.logo}
-                <h3 className="job-company">{job.company}</h3>
+                <h3 className="job-company">{job.title}</h3>
               </div>
-              <div className="job-offer">{job.offer}</div>
-              <div className="job-desc">
-                Lorem Ipsum Dolor Sit Amet Consectetur Facilisis Nunc Ut Tellus
-                Augue A aliquam Arcu. Libero Imperdiet Odio Sed Morbi Quis Felis
-                Prian.
+              <div className="job-offer">{job.status}</div>
+              <div className="job-desc">{job.description}
               </div>
-              <button className="view-more">View More</button>
+              <button className="view-more" onClick={() => {
+                setSelectedJob(job);
+                setShowJobModal(true);
+              }}>View More</button>
             </div>
           ))}
         </div>
+
+        {showModal && (
+        <div className="modalBackdrop">
+          <div className="modal">
+            <span
+              className="closeX"
+              onClick={() => setShowModal(false)}
+              title="Close"
+            >
+              &times;
+            </span>
+            <h3>Create New Job</h3>
+            <input
+              type="text"
+              placeholder="Job title"
+              value={jobTitle}
+              onChange={(e) => setJobTitle(e.target.value)}
+            />
+            <textarea
+              placeholder="Job description"
+              value={jobDescription}
+              onChange={(e) => setJobDescription(e.target.value)}
+            ></textarea>
+            <div className="modalButtons">
+              <button onClick={createJob} className="saveBtn">
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showJobModal && selectedJob && (
+  <div className="modalBackdrop">
+    <div className="modal">
+      <span
+        className="closeX"
+        onClick={() => setShowJobModal(false)}
+      >
+        &times;
+      </span>
+
+      <h3>{selectedJob.title}</h3>
+      <p className="jobDescFull">{selectedJob.description}</p>
+      <div className="jobInfo">
+        <p><strong>Company:</strong> {user?.name || "Your Company"}</p>
+        <p><strong>Created:</strong> {new Date(selectedJob.createdAt).toLocaleDateString()}</p>
+      </div>
+    </div>
+  </div>
+)}
       </div>
     </div>
   );

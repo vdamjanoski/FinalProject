@@ -1,7 +1,54 @@
 import './MentorProfileCard.css';
 import DashboardHeader from './DashboardHeader';
+import { useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 
 function MentorProfileCard() {
+  const [user, setUser] = useState(null);
+  const [error,setError] = useState("");
+
+  const token = localStorage.getItem("token")
+  useEffect(() => {
+    if (!token) return;
+
+    try{
+      const decoded= jwtDecode(token);
+      setUser({
+        id: decoded.id,
+        name: decoded.name,
+        role: decoded.role,
+        desc: decoded.desc,
+        email: decoded.email,
+        phone: decoded.phone,
+        skills: decoded.skills,
+      })
+    }catch (err){
+      console.log(err.message);
+    }
+  }, [token])
+  
+  
+  console.log(user);
+  useEffect(() => {
+    if(!user?.id) return;
+
+    const fetchUser = async () => {
+      try{
+        const res = await axios.get(
+          `http://localhost:10000/api/v1/user/${user.id}`,
+          {headers: {Authorization: `Bearer ${token}`}}
+        );
+        const userData = res.data.data.user;
+        setUser(prev => ({...prev,...userData}))
+      } catch(err){
+        console.log(err.message);
+      }
+    };
+
+    fetchUser();
+  }, [user?.id, token])
+
   return (
     <div className="mentor-page">
       <div className="mentor-main">
@@ -12,11 +59,11 @@ function MentorProfileCard() {
             alt="Kierra Press"
           />
           <div className="mentor-info">
-            <div className="mentor-name">Kierra Press</div>
-            <div className="mentor-role">Sales Representative</div>
+            <div className="mentor-name">{user?.name}</div>
+            <div className="mentor-role">{user?.role}</div>
             <div className="mentor-contact">
-              <div className="mentor-email">mentormail@gmail.com</div>
-              <div className="mentor-phone">+389 77 653 234</div>
+              <div className="mentor-email">{user?.email}</div>
+              <div className="mentor-phone">{user?.phone}</div>
             </div>
           </div>
         </div>
@@ -26,10 +73,9 @@ function MentorProfileCard() {
             <button className="mentor-offer-btn">+ Offer New Job</button>
           </div>
           <div className="mentor-skills">
-            <b>Skills: Sales | Management | Problem-solving</b>
+            <b> {user?.skills && `Skills: ${user?.skills.join(" | ")}`}</b>
           </div>
-          <div className="mentor-description">
-Lorem ipsum dolor sit amet consectetur. Suspendisse quis varius felis augue adipiscing. Sapien volutpat ac velit facilisis fermentum diam bibendum libero non. Semper morbi at congue pellentesque pharetra amet rhoncus elit quis. Lorem ipsum dolor sit amet consectetur. Suspendisse quis varius felis augue adipiscing. Sapien volutpat ac velit facilisis fermentum diam bibendum libero non. Semper morbi at congue pellentesque pharetra amet rhoncus elit quis. Lorem ipsum dolor sit amet consectetur. Suspendisse quis varius felis augue adipiscing. Sapien volutpat ac velit facilisis fermentum diam bibendum libero non. Semper morbi at congue pellentesque pharetra amet rhoncus elit quis. Lorem ipsum dolor sit amet consectetur. Suspendisse quis varius felis augue adipiscing. Sapien volutpat ac velit facilisis fermentum diam bibendum libero non. Semper morbi at congue pellentesque pharetra amet rhoncus elit quis.           </div>
+          <div className="mentor-description">{user?.desc}</div>
         </div>
       </div>
     </div>
