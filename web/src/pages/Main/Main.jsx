@@ -17,7 +17,7 @@ function Main() {
             </div>
             <div className="company-profile">
               <img
-                src="/public/eclipse.png"
+                src="/eclipse.png"
                 alt="Logo"
                 className="company-logo"
               />
@@ -35,7 +35,7 @@ function Main() {
               <div className="mentors-btns">
                 <button className="add-new-mentor">
                   <i>
-                    <img src="/public/Shape.png" alt="" />
+                    <img src="/Shape.png" alt="" />
                   </i>{" "}
                   Add New Mentor
                 </button>
@@ -46,7 +46,7 @@ function Main() {
               <div className="mentors-personal-cards">
                 <div className="mentors-personal-card">
                   <img
-                    src="/public/mentors1.svg"
+                    src="/mentors1.svg"
                     alt=""
                     className="mentors-personal-img"
                   />
@@ -67,7 +67,7 @@ function Main() {
                 </div>
                 <div className="mentors-personal-card">
                   <img
-                    src="/public/mentors2.svg"
+                    src="/mentors2.svg"
                     alt=""
                     className="mentors-personal-img"
                   />
@@ -88,7 +88,7 @@ function Main() {
                 </div>
                 <div className="mentors-personal-card">
                   <img
-                    src="/public/mentors3.svg"
+                    src="/mentors3.svg"
                     alt=""
                     className="mentors-personal-img"
                   />
@@ -141,10 +141,10 @@ function Main() {
                 </div>
                 <div className="navigation-btns">
                   <button>
-                    <img src="/public/left.png" alt="" />
+                    <img src="/left.png" alt="" />
                   </button>
                   <button>
-                    <img src="/public/right.png" alt="" />
+                    <img src="/right.png" alt="" />
                   </button>
                 </div>
               </aside>

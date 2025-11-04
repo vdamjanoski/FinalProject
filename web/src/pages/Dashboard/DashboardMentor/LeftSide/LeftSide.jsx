@@ -6,20 +6,20 @@ export default function LeftSide() {
           <div className="sidebar-mentor">
       <div className="sidebar-header-mentor">
         <div className="logo">
-          <img src="/public/Group8626.svg" alt="" className="img-mentor"/>
+          <img src="/Group8626.svg" alt="" className="img-mentor"/>
         </div>
       </div>
       <div className="sidebar-menu-mentor">
       <Link className="menu-item-mentor" to={{pathname: '/mentor/dashboard'}}>
-      <img src="/public/dashboard.svg" className="menu-icon-mentor" />
+      <img src="/dashboard.svg" className="menu-icon-mentor" />
           <p>Dashboard</p>
       </Link>
         <Link to={{pathname: '/mentor/my-stats'}} className='menu-item-mentor active'>
-        <img src="/public/profile.svg" className="menu-icon-mentor" />
+        <img src="/profile.svg" className="menu-icon-mentor" />
           <p>My Stats</p>
         </Link>
         <Link to={{pathname: '/mentor/job-feed'}} className='menu-item-mentor'>
-        <img src="/public/disc.svg" className="menu-icon-mentor" />
+        <img src="/disc.svg" className="menu-icon-mentor" />
           <p>Job Feed</p>
         </Link>
       </div>

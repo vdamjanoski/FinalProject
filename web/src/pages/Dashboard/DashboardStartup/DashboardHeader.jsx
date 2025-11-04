@@ -12,7 +12,7 @@ function DashboardHeader() {
             </div>
             <div className="company-profile">
               <img
-                src="/public/kierra.png"
+                src="/kierra.png"
                 alt="Logo"
                 className="company-logo"
               />

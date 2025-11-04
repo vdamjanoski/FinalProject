@@ -89,7 +89,6 @@
 .sidebar-footer:hover {
   opacity: 0.8;
 }
-/* header */
 
 .header-container {
   display: flex;
@@ -133,7 +132,7 @@
   font-size: 16px;
   font-weight: 500;
 }
-/* dddddddd */
+
 .Main-Container{
   background-color: #f6f6fa;
   display: flex;
@@ -219,11 +218,6 @@
   background: #e8eafd;
 }
 
-
-/* dddddd */
-
-/* ----------------------job */
-/* mentori css---------------------*/
 .mentor-section {
   width: 572px;
 }

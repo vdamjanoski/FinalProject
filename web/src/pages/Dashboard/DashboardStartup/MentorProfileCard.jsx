@@ -55,7 +55,7 @@ function MentorProfileCard() {
         <div className="mentor-card">
           <img
             className="mentor-avatar"
-            src='/public/kierra.png'
+            src='/kierra.png'
             alt="Kierra Press"
           />
           <div className="mentor-info">
@@ -70,7 +70,6 @@ function MentorProfileCard() {
         <div className="mentor-about">
           <div className="mentor-about-header">
             <span>About Mentor</span>
-            <button className="mentor-offer-btn">+ Offer New Job</button>
           </div>
           <div className="mentor-skills">
             <b> {user?.skills && `Skills: ${user?.skills.join(" | ")}`}</b>

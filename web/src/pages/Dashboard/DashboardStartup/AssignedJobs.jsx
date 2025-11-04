@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AssignedJobs.css";
 
-const jobsData = [
-  { id: 1, title: "Revenue per rate", status: "DONE" },
-  { id: 2, title: "ARPU (Average revenue per use)", status: "CANCELED" },
-  { id: 3, title: "CAC (Custom Acquisition Cost)", status: "IN PROGRESS" },
-  { id: 4, title: "Churn Rate", status: "DONE" },
-  { id: 5, title: "Burn Rate", status: "IN PROGRESS" },
-  { id: 6, title: "Operation Efficiency", status: "DONE" },
-  { id: 7, title: "Burn Rate", status: "IN PROGRESS" },
-  { id: 8, title: "Operation Efficiency", status: "DONE" },
-];
-
 function AssignedJobs() {
+  const token = localStorage.getItem("token")
   const [filter, setFilter] = useState("ALL");
+  const [jobsData, setJobsData] = useState([]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      if (!token) return;
+      try{
+        const res = await fetch("http://localhost:10000/api/v1/jobs", {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+        if (!res.ok){
+          throw new Error(`Error fetching jobs`);
+        }
+        const data = await res.json();
+        setJobsData(data);
+      } catch(err){
+        console.log("Error fetching jobs", err);
+      }
+    }
+    fetchJobs();
+  }, [token])
+  
     const filteredJobs =
       filter === "ALL"
         ? jobsData

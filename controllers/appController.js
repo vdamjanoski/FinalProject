@@ -268,7 +268,7 @@ exports.create = async (req, res) => {
   exports.getApplicationsForStartup = async (req, res) => {
     try {
       const startupId = req.auth.id;
-      const userRole = req.auth.userRole;
+      const userRole = req.auth.role;
 
       if (userRole !== "startup") {
         return res.status(400).json({

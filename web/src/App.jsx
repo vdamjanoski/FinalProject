@@ -53,8 +53,8 @@ const router = createBrowserRouter([
       {
         path: 'startup',
         children: [
-          { path: 'mentors', element: <Main/>},
           { path: 'dashboard', element: <DashboardStartup/>},
+          { path: 'mentors', element: <Main/>},
           { path: 'jobs', element: <StartupJobsDashboard/>}
         ]
       }

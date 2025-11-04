@@ -4,10 +4,10 @@ function MentorInfo() {
   return (
     <div className="mentor-profile-row">
       <div className="mentor-profile-card">
-        <img src="/public/kierra.png" alt="Kierra Press" className="mentor-avatar" />
+        <img src="/kierra.png" alt="Kierra Press" className="mentor-avatar" />
         <div className="mentor-profile-name">
           Kierra Press
-          <img src="/public/linkedin.svg" alt="LinkedIn" style={{width: 15, height: 15, marginLeft: 6}}/>
+          <img src="/linkedin.svg" alt="LinkedIn" style={{width: 15, height: 15, marginLeft: 6}}/>
         </div>
         <div className="mentor-profile-title">Sales Representative</div>
         <div className="mentor-profile-contact">

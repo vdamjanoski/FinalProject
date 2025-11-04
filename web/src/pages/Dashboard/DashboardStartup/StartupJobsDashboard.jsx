@@ -89,7 +89,7 @@ export default function StartupJobsDashboard() {
           </div>
           <div className="company-profile">
             <img
-              src="/public/eclipse.png"
+              src="/eclipse.png"
               alt="Logo"
               className="company-logo"
             />
