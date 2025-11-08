@@ -1,6 +1,63 @@
 const User = require("../model/mentor")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
+const multer = require("multer")
+const uuid = require("uuid")
+const Application = require("../model/applicationSchema")
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "public");
+  },
+  filename: (req, file, callback) => {
+    const ext = file.mimetype.split("/")[1];
+    const imageId = uuid.v4();
+    callback(null, `user-${imageId}-${Date.now()}.${ext}`);
+  },
+});
+
+const multerFilter = (req, file, callback) => {
+  if (file.mimetype.startsWith("image")) {
+    callback(null, true);
+  } else {
+    callback(new Error("File role is not supported"), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+exports.uploadUserPhoto = upload.single("photo");
+
+exports.update = async (req, res) => {
+  try {
+    console.log(req.file);
+
+    if (req.file) {
+      const fileName = req.file.filename;
+      req.body.photo = fileName;
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        user,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
 
 exports.signup = async (req, res) => {
   console.log("Request body", req.body);
@@ -49,7 +106,7 @@ exports.signup = async (req, res) => {
       skills,
       desc,
       representative,
-      address,  
+      address,
     });
     console.log("saved user", newUser);
     
@@ -64,7 +121,7 @@ exports.signup = async (req, res) => {
         phone: newUser.phone,
         desc: newUser.desc,
         skills: newUser.skills,
-        address: newUser.address
+        address: newUser.address,
       },
     });
   } catch (err) {
@@ -110,6 +167,7 @@ exports.login = async (req, res) => {
               name: user.name,
               email: user.email,
               id: user._id,
+      
             }
         })
         
@@ -180,3 +238,23 @@ exports.update = async (req,res) => {
     })
   }
 }
+
+exports.getMentors = async (req, res) => {
+  try {
+    const allMentors = await User.find({ role: 'mentor' });
+
+    console.log("All mentors found:", allMentors.length);
+
+    res.status(200).json({
+      status: "success",
+      results: allMentors.length,
+      data: allMentors,
+    });
+  } catch (err) {
+    console.error("Error fetching mentors:", err);
+    res.status(500).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};

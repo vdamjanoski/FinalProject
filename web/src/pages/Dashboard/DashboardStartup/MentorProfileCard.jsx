@@ -30,24 +30,6 @@ function MentorProfileCard() {
   
   
   console.log(user);
-  useEffect(() => {
-    if(!user?.id) return;
-
-    const fetchUser = async () => {
-      try{
-        const res = await axios.get(
-          `http://localhost:10000/api/v1/user/${user.id}`,
-          {headers: {Authorization: `Bearer ${token}`}}
-        );
-        const userData = res.data.data.user;
-        setUser(prev => ({...prev,...userData}))
-      } catch(err){
-        console.log(err.message);
-      }
-    };
-
-    fetchUser();
-  }, [user?.id, token])
 
   return (
     <div className="mentor-page">

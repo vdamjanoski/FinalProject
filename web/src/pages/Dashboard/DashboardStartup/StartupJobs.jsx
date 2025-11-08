@@ -87,12 +87,49 @@ export default function StartupJobs() {
     <div className="modal">
       <span
         className="closeX"
-        onClick={() => setShowJobModal(false)}
+        onClick={() => setShowJobModal(false) && setSelectedJob(null)} 
       >
         &times;
       </span>
       <h3>{selectedJob.title}</h3>
       <p className="jobDescFull">{selectedJob.description}</p>
+      <strong>Skills required:</strong>{" "}
+      {selectedJob.skillsRequired?.join(", ") || "Not specified"}
+      <div>
+              {user?.role === "mentor" && (
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch(
+                        "http://localhost:10000/api/v1/application",
+                        {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                          },
+                          body: JSON.stringify({
+                            jobId: selectedJob._id,
+                          }),
+                        }
+                      );
+
+                      const data = await res.json();
+                      if (res.ok) {
+                        alert("You have successfully applied for this job!");
+                        setSelectedJob(null);
+                      } else {
+                        alert(data.message || "Failed to apply for job");
+                      }
+                    } catch (err) {
+                      console.log("Apply job error:", err);
+                    }
+                  }}
+                >
+                  Apply for Job
+                </button>
+              )}
+            </div>
     </div>
   </div>
 )}

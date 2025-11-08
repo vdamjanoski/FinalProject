@@ -51,7 +51,10 @@ const userSchema = new mongoose.Schema(
         ref: "Job",
       },
     ],
-    profilePic: String,
+    photo: {
+    type: String,
+    default: `default.jpg`
+    },
     inviteEmails: String,
   },
   { timestamps: true }

@@ -4,6 +4,7 @@ import "./MyStats.css";
 import { useNavigate } from "react-router-dom";
 import Logout from "../DashboardMentor/LeftSide/Logout";
 import LeftSideStartup from "../DashboardMentor/LeftSide/LeftSideStartup";
+import { jwtDecode } from "jwt-decode";
 
 const jobsData = [
   { id: 1, title: "Revenue per rate", status: "DONE" },

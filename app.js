@@ -7,6 +7,8 @@ const cors = require("cors");
 const auth = require("./controllers/mentorController")
 const job = require("./controllers/jobController")
 const application = require("./controllers/appController")
+const multer = require("multer")
+
 
 
 const app = express();
@@ -16,7 +18,32 @@ database.connectDatabase();
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use("/uploads", express.static("public"));
 
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/uploads");
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `user-${Date.now()}.${ext}`);
+  },
+});
+
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Not an image!"), false);
+  }
+};
+
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
 
 app.use(
   jwt
@@ -40,13 +67,15 @@ app.use(
     path: ["/api/v1/signup", "/api/v1/login"],
   })
 );
-app.post("/api/v1/signup", auth.signup);
+app.post("/api/v1/signup", upload.single("photo"),auth.signup);
 app.post("/api/v1/login", auth.login);
+app.patch("/api/v1/uploadphoto/:id", upload.single("photo"), auth.uploadUserPhoto, auth.update);
 
 app.get("/api/v1/users", auth.getUsers);
 app.get("api/v1/user/:id", auth.getUser);
 app.delete("/api/v1/user/:id", auth.deleteUser);
 app.patch("/api/v1/updateUser/:id", auth.update)
+app.get("/api/v1/getMentors", auth.getMentors)
 
 app.post("/api/v1/job", job.createJob);
 app.get("/api/v1/jobs", job.getAllJobs);
@@ -63,6 +92,7 @@ app.delete("/api/v1/application/:id", application.deleteApp);
 app.patch("/api/v1/application/:id", application.updateApp);
 app.get("/api/v1/offers/mentor", application.getMentorOffersJob);
 app.get("/api/v1/applications/startup", application.getApplicationsForStartup);
+app.get("/api/v1/mentorsforstartup/:id", application.getMentorDetailsForStartup)
 
 app.listen(process.env.PORT, (err) => {
     if (err){

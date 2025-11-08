@@ -14,6 +14,7 @@ import MyStats from "./pages/Dashboard/DashboardStartup/MyStats"
 import DashboardStartup from "./pages/Dashboard/DashboardStartup/DashboardStartup"
 import StartupJobsDashboard from "./pages/Dashboard/DashboardStartup/StartupJobsDashboard"
 import Main from "./pages/Main/Main"
+import MentorInfo from "./pages/Dashboard/DashboardStartup/MentorInfo"
 
 const router = createBrowserRouter([
   {
@@ -55,7 +56,8 @@ const router = createBrowserRouter([
         children: [
           { path: 'dashboard', element: <DashboardStartup/>},
           { path: 'mentors', element: <Main/>},
-          { path: 'jobs', element: <StartupJobsDashboard/>}
+          { path: 'jobs', element: <StartupJobsDashboard/>},
+          { path: `/startup/mentors/:id`, element: <MentorInfo/>}
         ]
       }
 ]);

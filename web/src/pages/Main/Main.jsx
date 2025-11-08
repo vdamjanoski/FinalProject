@@ -1,7 +1,68 @@
 import LeftSideStartup from "../Dashboard/DashboardMentor/LeftSide/LeftSideStartup";
 import "./Main.css";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Main() {
+  const [user, setUser] = useState(null);
+  const [mentors, setMentors] = useState([]);
+
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  
+  
+  useEffect(() => {
+    if (!token) return;
+    try {
+      const decoded = jwtDecode(token);
+      setUser({
+          name: decoded.name,
+          role: decoded.role,
+          id: decoded.id,
+      });
+    } catch (err) {
+      console.warn("Failed to decode token", err);
+    }
+  }, [token]);
+
+  const handleViewMentor = (mentorId) => {
+    navigate(`/startup/mentors/${mentorId}`);
+  };
+
+  useEffect(() => {
+    const fetchMentors = async () => {
+      try {
+        const headers = { Authorization: `Bearer ${token}` };
+
+        const resMentors = await axios.get(
+          "http://localhost:10000/api/v1/getMentors",
+          { headers }
+        );
+        const list = resMentors?.data.data || [];
+        console.log("Mentors fetched:", list);
+        setMentors(Array.isArray(list) ? list : []);
+        console.log("Mentors:", mentors);
+        
+
+        const resApps = await axios.get(
+          "http://localhost:10000/api/v1/applications/startup",
+          { headers }
+        );
+        const applications = resApps?.data?.data || [];
+        console.log(applications);
+      } catch (err) {
+        console.error("Error fetching mentors or jobs", err);
+      }
+    };
+
+    fetchMentors();
+  }, [token]);
+
+
+
+
   return (
     <main>
       <div className="main-card">
@@ -25,88 +86,32 @@ function Main() {
             </div>
           </div>
           <div className="mentors-main-card">
-            <div className="mentors-card-navigation">
-              <div className="mentors-text">
-                <p className="mentors-title">
-                  <b>My Mentors</b>
-                </p>
-                <p className="mentors-paragraph">Monitor and add new mentors</p>
-              </div>
-              <div className="mentors-btns">
-                <button className="add-new-mentor">
-                  <i>
-                    <img src="/Shape.png" alt="" />
-                  </i>{" "}
-                  Add New Mentor
-                </button>
-                <button className="create-new-job">Create New Job</button>
-              </div>
-            </div>
             <div className="cards-aside">
               <div className="mentors-personal-cards">
-                <div className="mentors-personal-card">
+                {mentors.map((mentor) => (
+                  <div className="mentors-personal-card" key={mentor?._id}>
                   <img
                     src="/mentors1.svg"
                     alt=""
                     className="mentors-personal-img"
                   />
                   <div className="mentors-personal-info">
-                    <h3 className="mentors-name">Kierra Press</h3>
-                    ...
+                    <h3 className="mentors-name">{mentor?.name}</h3>
+                          <div>★ ★ ★ ★ ☆</div>
+                          <div>•</div>
+                          <div>KPI-based</div>
                     <h4>
-                      <b>Skills: Sales | Management | Problem-solving</b>
+                      <b>Skills: {" "} {mentor?.skills?.join(" | ")} </b>
                     </h4>
                     <span className="view-mentor-flex">
                       <h5>
-                        Field sales training. 5+ years in an outside sales
-                        position
+                        {mentor?.desc || "No description"}
                       </h5>
-                      <button className="view-mentor-btn">View Mentor</button>
+                      <button className="view-mentor-btn" onClick={() => {handleViewMentor(mentor._id)}}>View Mentor</button>
                     </span>
                   </div>
                 </div>
-                <div className="mentors-personal-card">
-                  <img
-                    src="/mentors2.svg"
-                    alt=""
-                    className="mentors-personal-img"
-                  />
-                  <div className="mentors-personal-info">
-                    <h3 className="mentors-name">Alison Vetrovs</h3>
-                    ...
-                    <h4>
-                      <b>Skills: Sales | Management | Problem-solving</b>
-                    </h4>
-                    <span className="view-mentor-flex">
-                      <h5>
-                        The sales representative position is an OR based sales
-                        role with uncapp...
-                      </h5>
-                      <button className="view-mentor-btn">View Mentor</button>
-                    </span>
-                  </div>
-                </div>
-                <div className="mentors-personal-card">
-                  <img
-                    src="/mentors3.svg"
-                    alt=""
-                    className="mentors-personal-img"
-                  />
-                  <div className="mentors-personal-info">
-                    <h3 className="mentors-name">Marcus Carder</h3>
-                    ...
-                    <h4>
-                      <b>Skills: Leadership | Management | Product sales</b>
-                    </h4>
-                    <span className="view-mentor-flex">
-                      <h5>
-                        Field sales training. 5+ years in an outside sales
-                        position
-                      </h5>
-                      <button className="view-mentor-btn">View Mentor</button>
-                    </span>
-                  </div>
-                </div>
+                ))}
               </div>
               <aside className="aside">
                 <div className="aside-title">
@@ -117,7 +122,7 @@ function Main() {
                   <div className="aside-card">
                     <p>Total Mentors</p>
                     <p>
-                      <b>32</b>
+                      <b>{mentors.length}</b>
                     </p>
                   </div>
                   <div className="aside-card">

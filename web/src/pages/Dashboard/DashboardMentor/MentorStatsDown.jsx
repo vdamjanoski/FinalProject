@@ -1,7 +1,120 @@
 import React from 'react';
 import './MentorStatsDown.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 export default function MentorStatsDown() {
+    const [user, setUser] = useState(null);
+  const [statsData, setStatsData] = useState({
+  total: 0,
+  assigned: 0,
+  applied: 0,
+  finished: 0,
+});
+const [chartData, setChartData] = useState([]);
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (!token) return;
+
+    try {
+      const decoded = jwtDecode(token);
+      setUser({
+        id: decoded.id,
+        name: decoded.name,
+        photo: decoded.photo,
+        role: decoded.type,
+        desc: decoded.desc,
+        email: decoded.email,
+        phone: decoded.phone,
+        skills: decoded.skills,
+      });
+    } catch (err) {
+      console.log("Failed to decode token");
+    }
+  }, [token]);
+
+  useEffect(() => {
+
+    if (!user?.id) return;
+    const fetchUser = async () => {
+      
+
+      try {
+        const res = await axios.get(
+          `http://localhost:10000/api/v1/user/${user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("Fetched user:", res.data.data.user);
+        setUser(res.data.data.user);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+
+   
+fetchUser();
+    
+    
+  }, [user?.id, token]);
+
+   useEffect(() => {
+  const fetchStats = async () => {
+    if (!user?.id) return;
+
+    try {
+      const res = await axios.get(
+        `http://localhost:10000/api/v1/application/mentor/${user.id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const apps = res.data.data; 
+
+      setStatsData({
+        total: apps.length,
+        assigned: apps.filter(app => app.acceptedStatus === "in progress").length,
+        applied: apps.filter(app => app.applicationType === "mentorToCompany").length,
+        finished: apps.filter(app => app.acceptedStatus === "done").length,
+      });
+      
+      const allMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      const monthlyCounts = {};
+
+      allMonths.forEach(m => {
+  monthlyCounts[m] = { month: m, done: 0, inProgress: 0, rejected: 0 };
+});
+      apps.forEach(app => {
+        const created = new Date(app.createdAt);
+        const month = created.toLocaleString("default", { month: "short" });
+
+        if (!monthlyCounts[month]) {
+          monthlyCounts[month] = { month, done: 0, inProgress: 0, rejected: 0 };
+        }
+
+        if (app.acceptedStatus === "done") {
+          monthlyCounts[month].done++;
+        } else if (app.acceptedStatus === "in progress") {
+          monthlyCounts[month].inProgress++;
+        } else if (app.acceptedStatus === "rejected") {
+          monthlyCounts[month].rejected++;
+        }
+      });
+
+      setChartData(Object.values(monthlyCounts));
+    } catch (err) {
+      console.log("Error fetching stats:", err.message);
+    }
+    
+  };
+
+  fetchStats();
+}, [user, token]);
   return (
     <div className="mentor-down-container">
       <div className="mentor-down-left">

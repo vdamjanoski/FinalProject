@@ -15,7 +15,14 @@ export default function Signup() {
   const [representative, setRepresentative] = useState("");
   const [address, setAddress] = useState("");
   const [inviteEmails, setInviteEmails] = useState("")
-   const navigate = useNavigate();
+  const [photo, setPhoto] = useState(null)
+  const navigate = useNavigate();
+
+  function handleProfilePicChange(e) {
+    const file = e.target.files[0];
+    if (file) setPhoto(URL.createObjectURL(file));
+    console.log(file);
+  }
 
  const handleSend = async (e) => {
   e.preventDefault();
@@ -26,11 +33,13 @@ const payload = {
   password,
   role: accountType,
   name,
+  photo: photo,
   address,
   ...(accountType === "mentor"
     ? { phone, skills: skills.split(",").map(s => s.trim()) }
     : { representative }),
 };
+
 
   try {
     const res = await fetch("http://localhost:10000/api/v1/signup", {
@@ -76,6 +85,19 @@ const payload = {
       </div>
       {step === 1 && (
         <div className="right-side">
+          <div className="logo-upload-circle">
+                  {photo ? (
+                    <img src={photo} alt="Mentor Profile" />
+                  ) : (
+                    <span className="camera-icon">📷</span>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleProfilePicChange}
+                    className="logo-upload-input"
+                  />
+                </div>
           <div className="mentor-logo-title">
             <img src="vector-blue.png" alt="" />
           </div>
@@ -173,7 +195,7 @@ const payload = {
                 onChange={(e) => setSkills(e.target.value)}
                 required
               />
-              <button className="register-btn" type="submit">Register</button>
+              <button className="continue-btn" type="submit">Register</button>
               </div>
             </div>
         </form>
@@ -223,7 +245,7 @@ const payload = {
                 onChange={(e) => setInviteEmails(e.target.value)}
                 required
               />
-              <button className="register-btn" type="submit">Register</button>
+              <button className="continue-btn" type="submit">Register</button>
               </div>
             </div>
         </form>

@@ -21,36 +21,58 @@ const mentors = [
   },
 ];
 
-
 function DashboardStartup() {
-    const token = localStorage.getItem("token")
-    const [jobsData, setJobsData] = useState([]);
-  
-    useEffect(() => {
-      const fetchJobs = async () => {
-        if (!token) return;
-        try{
-          const res = await fetch("http://localhost:10000/api/v1/applications/startup", {
-            headers: {
-              "Authorization": `Bearer ${token}`
-            },
-          });
+  const token = localStorage.getItem("token");
+  const [jobsData, setJobsData] = useState([]);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    if (!token) return;
+    try {
+      const decoded = jwtDecode(token);
+      setUser({
+        id: decoded.id,
+        name: decoded.name,
+        role: decoded.role,
+        desc: decoded.desc,
+        email: decoded.email,
+        phone: decoded.phone,
+        photo: decoded.photo,
+        skills: decoded.skills,
+      });
+    } catch (err) {
+      console.log(err.message); 
+    }
+  }, [token]);
 
-          const text = await res.text();
-          console.log("Response:", text);
-          
-          if (!res.ok){
-            throw new Error(`Error fetching jobs`);
+  console.log("User:", user);
+  useEffect(() => {
+    const fetchJobs = async () => {
+      if (!token) return;
+      try {
+        const res = await fetch(
+          "http://localhost:10000/api/v1/applications/startup",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-          const data = JSON.parse(text);
-          console.log(data.data);
-          setJobsData(data.data);
-        } catch(err){
-          console.log("Error fetching jobs", err);
+        );
+
+        const text = await res.text();
+        console.log("Response:", text);
+
+        if (!res.ok) {
+          throw new Error(`Error fetching jobs`);
         }
+        const data = JSON.parse(text);
+        console.log(data.data);
+        setJobsData(data.data);
+      } catch (err) {
+        console.log("Error fetching jobs", err);
       }
-      fetchJobs();
-    }, [token])
+    };
+    fetchJobs();
+  }, [token]);
 
   const [filter, setFilter] = useState("ALL");
   const filteredJobs =
@@ -58,12 +80,14 @@ function DashboardStartup() {
       ? jobsData
       : jobsData.filter((job) => {
           if (filter === "done") return job.acceptedStatus === "done";
-          if (filter === "canceled") return job.acceptedStatus === "canceled";
-          if (filter === "in progress") return job.acceptedStatus === "in progress";
+          if (filter === "rejected") return job.acceptedStatus === "rejected";
+          if (filter === "in progress")
+            return job.acceptedStatus === "in progress";
           return true;
         });
-        console.log("Filtered jobs:",filteredJobs[0]);
-        
+  console.log("Filtered jobs:", filteredJobs[0]);
+  console.log("token:", user);
+
   return (
     <div>
       <div className="Main-Container">
@@ -78,12 +102,8 @@ function DashboardStartup() {
               />
             </div>
             <div className="company-profile">
-              <img
-                src="/eclipse.png"
-                alt="Logo"
-                className="company-logo"
-              />
-              <span className="company-text">TechWave Innovations</span>
+              <img src="/default.jpg" alt="Logo" className="company-logo" />
+              <span className="company-text">{user?.name}</span>
             </div>
           </div>
           <div className="main-startup-dashboard">
@@ -91,7 +111,7 @@ function DashboardStartup() {
               <div className="assigned-jobs-dashboard">
                 <h2>Assigned Jobs</h2>
                 <div className="tabs">
-                  {["all", "done", "canceled", "in progress"].map((tab) => (
+                  {["all", "done", "rejected", "in progress"].map((tab) => (
                     <button
                       key={tab}
                       className={`tab-button ${filter === tab ? "active" : ""}`}
@@ -105,7 +125,7 @@ function DashboardStartup() {
                 <div className="job-list">
                   {filteredJobs.map((job) => (
                     <div key={job._id} className="job-card">
-                      <span className="job-title">{job.jobId.title}</span>
+                      <span className="job-title">{job.jobId?.title}</span>
                       <span
                         className={`job-status status-${job.acceptedStatus
                           .toLowerCase()
